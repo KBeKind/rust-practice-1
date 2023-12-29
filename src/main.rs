@@ -27,6 +27,17 @@ fn main() {
     let health: &str = if height < 180 {"good"} else {"unknown"};
     println!("The health is: {}", health);
 
+
+let mut x = 1;
+
+loop {
+    println!("The value of x is: {}", x);
+    x += 1;
+    if x >= 5 {
+        break;
     
+    }
+}
+
 
 }
