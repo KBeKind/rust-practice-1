@@ -1,3 +1,7 @@
+
+use std::io;
+
+
 fn main() {
 
     let proceed: bool = true;
@@ -40,4 +44,36 @@ loop {
 }
 
 
+// There are other conditionals that we can explore in Rust. Like using `if let`
+
+
+let maybe_number: Option<Option<()>> = None;
+//let maybe_number = Some(42);
+if let Some(number) = maybe_number {
+    println!("The number is {:?}", number);
+} else {
+    println!("There is no number");
+}
+
+
+
+    // WHILE LOOPS
+
+    let mut i = 0;
+    while i < 5  {
+        println!("The value of i is: {}", i);
+        i += 1;
+    }
+
+    let mut input = String::new();
+
+    while input.trim() != "quit" {
+        input.clear();
+        println!("Enter a word (type 'quit' to exit): ");
+        io::stdin().read_line(&mut input).expect("Failed to read line");
+        println!("You entered: {}", input);
+
+    }
+    println!("Exiting...");
+    
 }
