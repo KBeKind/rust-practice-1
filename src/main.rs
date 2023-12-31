@@ -1,5 +1,5 @@
 
-use std::{io, result};
+use std::{io::{self, BufReader, BufRead}, result, vec, fs::File};
 
 
 fn main() {
@@ -157,6 +157,99 @@ if let Some(number) = maybe_number {
     println!("The sum is: {}", result);
 
 
+    // BORROWING
+    // BORROWING ALLOWS YOU TO LEND OWNERSHIP OF A VARIABLE TO A FUNCTION OR ANOTHER PART OF YOUR PROGRAM WITHOUT
+    // ACTUALLY TRANSFERRING OWNERSHIP OF THE VARIABLE
+    // WHEN BORROWING IN RUST WE ARE SAYING "I WANT TO USE THE VARIABLE FOR A WHILE BUT I PROMISE I WONT MODIFY IT"
+
+
+        let mut my_vec: Vec<i32> = vec![1, 2, 3, 4, 5];
+        let my_int: i32 = 10;
+        let my_string: String = String::from("Hello, World!");
+
+    // THIS WILL COMPILE
+    // THE INTS WILL COPY A VALUE
+    own_integer(my_int);
+    println!("The value of my_int is: {}", my_int);
+
+    // TAKE A BORROW OF my_string, THE & MAKES IT A BORROW
+    borrow_string(&my_string);
+    // FOR STRINGS IT MOVES,NOT COPIES
+    // own_string has now moved so below line will not compile:
+    println!("{:?}", my_string);
+
+
+    // OWNING / MOVING A STRING
+    own_string(my_string); // THIS IS MOVING THE VALUE 
+    //println!("{:?}", my_string); // Since my_string ISNT THERE ANYMORE, THIS WONT COMPILE
+
+    let a_new_vec: Vec<i32> =  borrow_vec(&my_vec);
+
+    println!("{:?}", a_new_vec);
+
+
+    
+    // PANIC TO CRASH PROGRAM
+    //panic!("crash and burn");
+
+    // GENERALLY PANIC BY ITSELF ISNT USED IN PRODUCTION
+    // IT IS GENERALLY PREFERRED TO USE BETTER ERROR HANDLING
+
+
+    // ERROR HANDLING
+    // USING MATCH TO HANDLE ERRORS
+    let file: Result<File, io::Error> = File::open("non_existent_file.txt");
+    match file {
+        // MATCH TO CHECK IF IT IS A FILE OR ERROR
+        Ok(file) => {
+            // IF THE FILE EXISTED THEN IT WOULD PRINT OUT THE LINES
+            let reader: BufReader<File> = BufReader::new(file);
+            for line in reader.lines(){
+                println!("{}", line.unwrap());
+            }
+        },
+        // IF THE FILE DIDNT EXIST THEN IT WILL PROVIDE AN ERROR MESSAGE
+        Err(error) => {
+            // NESTED MATCH TO HANDLE DIFFERENT ERRORS
+            match error.kind() {
+                std::io::ErrorKind::NotFound => {
+                    // CAN USE println! INSTEAD OF panic IF IT IS SET UP RIGHT
+                    println!("File not found: {}", error)
+                    //panic!("File not found: {}", error)        
+                } 
+                _ => {
+                    // CAN USE println! INSTEAD OF panic IF IT IS SET UP RIGHT
+                    println!("Error opening file: {}", error)
+                    //panic!("Error opening file: {}", error)
+                }
+            }   
+    
+        }
+    };
+}
+
+// THE & MAKES IT A BORROW
+fn borrow_string(aString: &String) {
+    println!("The borrowed string is: {}", aString);
+}
+
+fn own_string(aString: String) {
+    println!("The owned string is: {}", aString);
+}
+
+fn own_integer(anInteger: i32) { 
+    anInteger + 1;
+}
+
+fn borrow_vec(mut vector: &Vec<i32>) -> Vec<i32>{
+    // CREATE A NEW VECTOR SINCE THE PARAMETER IS A BORROW
+    // COULD ITERATE OVER THE PARAMETER AND PUSH VALUES INTO THE new_vector
+    let mut new_vector: Vec<i32> = Vec::new();
+    for number in vector {
+        new_vector.push(*number);
+    }
+    new_vector.push(10);
+    new_vector
 }
 
 // UNIT FUNCTIONS HAVE NO RETURN VALUE
