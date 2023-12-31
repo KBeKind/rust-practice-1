@@ -65,16 +65,16 @@ if let Some(number) = maybe_number {
         i += 1;
     }
 
-    let mut input = String::new();
+    // let mut input = String::new();
 
-    while input.trim() != "quit" {
-        input.clear();
-        println!("Enter a word (type 'quit' to exit): ");
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        println!("You entered: {}", input);
+    // while input.trim() != "quit" {
+    //     input.clear();
+    //     println!("Enter a word (type 'quit' to exit): ");
+    //     io::stdin().read_line(&mut input).expect("Failed to read line");
+    //     println!("You entered: {}", input);
 
-    }
-    println!("Exiting...");
+    // }
+    // println!("Exiting...");
     
 
     // FOR LOOPS
@@ -101,9 +101,21 @@ if let Some(number) = maybe_number {
     }
 
 
+    println!("continue and break test below");
 
+    // USING CONTINUE AND BREAK
+    for i in 1..=10 {
+        if i % 2 == 0 {
+            // SKIPS EVEN NUMBERS
+            // CONTINUE TAKES US TO NEXT ROUND OF LOOP
+            continue;
+        }
+        println!("The value of i is: {}", i);
+        if i == 7 {
+        break;
+        }
 
-
+    }
 
 
 
