@@ -173,20 +173,44 @@ if let Some(number) = maybe_number {
     println!("The value of my_int is: {}", my_int);
 
     // TAKE A BORROW OF my_string, THE & MAKES IT A BORROW
-    own_string(&my_string);
+    borrow_string(&my_string);
     // FOR STRINGS IT MOVES,NOT COPIES
     // own_string has now moved so below line will not compile:
-    println!("{:?}", my_string); // Since my_string ISNT THERE ANYMORE
+    println!("{:?}", my_string);
+
+
+    // OWNING / MOVING A STRING
+    own_string(my_string); // THIS IS MOVING THE VALUE 
+    //println!("{:?}", my_string); // Since my_string ISNT THERE ANYMORE, THIS WONT COMPILE
+
+    let a_new_vec: Vec<i32> =  borrow_vec(&my_vec);
+
+    println!("{:?}", a_new_vec);
 
 }
 
 // THE & MAKES IT A BORROW
-fn own_string(aString: &String) {
+fn borrow_string(aString: &String) {
     println!("The borrowed string is: {}", aString);
+}
+
+fn own_string(aString: String) {
+    println!("The owned string is: {}", aString);
 }
 
 fn own_integer(anInteger: i32) { 
     anInteger + 1;
+}
+
+fn borrow_vec(mut vector: &Vec<i32>) -> Vec<i32>{
+    // CREATE A NEW VECTOR SINCE THE PARAMETER IS A BORROW
+    // COULD ITERATE OVER THE PARAMETER AND PUSH VALUES INTO THE new_vector
+    let mut new_vector: Vec<i32> = Vec::new();
+    for number in vector {
+        new_vector.push(*number);
+    }
+    new_vector.push(10);
+    new_vector
 }
 
 // UNIT FUNCTIONS HAVE NO RETURN VALUE
