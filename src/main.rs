@@ -1,5 +1,5 @@
 
-use std::{io, result};
+use std::{io, result, vec};
 
 
 fn main() {
@@ -157,6 +157,36 @@ if let Some(number) = maybe_number {
     println!("The sum is: {}", result);
 
 
+    // BORROWING
+    // BORROWING ALLOWS YOU TO LEND OWNERSHIP OF A VARIABLE TO A FUNCTION OR ANOTHER PART OF YOUR PROGRAM WITHOUT
+    // ACTUALLY TRANSFERRING OWNERSHIP OF THE VARIABLE
+    // WHEN BORROWING IN RUST WE ARE SAYING "I WANT TO USE THE VARIABLE FOR A WHILE BUT I PROMISE I WONT MODIFY IT"
+
+
+        let mut my_vec: Vec<i32> = vec![1, 2, 3, 4, 5];
+        let my_int: i32 = 10;
+        let my_string: String = String::from("Hello, World!");
+
+    // THIS WILL COMPILE
+    // THE INTS WILL COPY A VALUE
+    own_integer(my_int);
+    println!("The value of my_int is: {}", my_int);
+
+    // TAKE A BORROW OF my_string, THE & MAKES IT A BORROW
+    own_string(&my_string);
+    // FOR STRINGS IT MOVES,NOT COPIES
+    // own_string has now moved so below line will not compile:
+    println!("{:?}", my_string); // Since my_string ISNT THERE ANYMORE
+
+}
+
+// THE & MAKES IT A BORROW
+fn own_string(aString: &String) {
+    println!("The borrowed string is: {}", aString);
+}
+
+fn own_integer(anInteger: i32) { 
+    anInteger + 1;
 }
 
 // UNIT FUNCTIONS HAVE NO RETURN VALUE
