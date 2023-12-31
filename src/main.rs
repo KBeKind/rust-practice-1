@@ -76,4 +76,36 @@ if let Some(number) = maybe_number {
     }
     println!("Exiting...");
     
+
+    // FOR LOOPS
+
+    // DOESNT INCLUDE 5
+    for i in 0..5 {
+        println!("The value of i is: {}", i);
+    }
+
+    // INCLUDES 5
+    for i in 0..=5 {
+        println!("The value of i is: {}", i);
+    }
+
+    // REVERSE THE ORDER WITH .rev
+    for i in (0..5).rev() {
+        println!("The value of i is: {}", i);
+    }
+
+
+    let numbers: Vec<i32> = vec![1, 2, 3, 4, 5];
+    for n in numbers {
+        println!("The value of n is: {}", n);
+    }
+
+
+
+
+
+
+
+
+
 }
