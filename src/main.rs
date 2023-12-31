@@ -141,6 +141,9 @@ if let Some(number) = maybe_number {
     
     // }
 
+
+    // CALLING FUNCTIONS
+
     process_numbers(&[1,2,3]);
 
 
