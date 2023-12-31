@@ -1,5 +1,5 @@
 
-use std::io;
+use std::{io, result};
 
 
 fn main() {
@@ -59,7 +59,7 @@ if let Some(number) = maybe_number {
 
     // WHILE LOOPS
 
-    let mut i = 0;
+    let mut i: i32 = 0;
     while i < 5  {
         println!("The value of i is: {}", i);
         i += 1;
@@ -119,5 +119,80 @@ if let Some(number) = maybe_number {
 
 
 
+    // MATCH CONTROL FLOW
 
+    let name: &str = "Hello";
+
+    match name {
+        "Hello" => println!("Hello"),
+        "World" => println!("World"),
+        // THE _ MEANS DEFAULT
+        _ => println!("Default"),
+    }
+
+
+    // println!("Please enter a greeting:");
+    // let mut greeting: String = String::new();
+    // io::stdin().read_line(&mut greeting).expect("Failed to read line");
+    // match greeting.trim() {
+    //     "Hello" => println!("Hi Welcome"),
+    //     "Goodbye" => println!("Bye Bye"),
+    //     _ => println!("Default greeting because i dont know what you said"),
+    
+    // }
+
+    process_numbers(&[1,2,3]);
+
+
+    let chunk: String = split_string("hello,world".to_string(), ',', 0);
+
+    println!("The chunk is: {}", chunk);
+
+
+    let numbers: Vec<i32> = vec![1, 2, 3, 4, 5];
+    let result: i32 = sum(&numbers);
+    println!("The sum is: {}", result);
+
+
+}
+
+// UNIT FUNCTIONS HAVE NO RETURN VALUE
+fn process_numbers(numbers: &[i32]) {
+    // Initialze the sum to zero
+    let mut sum: i32 = 0;
+
+
+    for number in numbers {
+
+        sum += number;
+        println!("The sum is: {}", sum);
+    
+    }
+
+    if sum % 2 == 0 {
+        println!("The sum is even");
+    } else {
+        println!("The sum is odd");
+    }
+
+
+
+}
+
+// FUNCTION WITH A RETURN VALUE STRING
+fn split_string(aString: String, delimeter: char, field: usize) -> String {
+
+    let parts: Vec<&str> = aString.split(delimeter).collect();
+    let result: Option<&&str> = parts.get(field);
+    // USING THE OPTION WITH A PANIC THERE IN CASE IT DOESNT EXIST
+    result.expect("oops: something wrong").to_string()
+}
+
+// FUNCTION WITH A RETURN VALUE INTEGER i32
+fn sum(numbers: &[i32]) -> i32 {
+    let mut total: i32 = 0;
+    for number in numbers {
+        total += number;
+    }
+    total
 }
